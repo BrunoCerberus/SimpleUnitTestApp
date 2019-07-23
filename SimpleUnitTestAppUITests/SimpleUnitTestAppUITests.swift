@@ -27,7 +27,20 @@ class SimpleUnitTestAppUITests: XCTestCase {
     }
 
     func testMyPerfTest() {
+        let app = XCUIApplication()
+        print(app.debugDescription)
         
+        let lbl = app.staticTexts["myLabel"]
+        print(lbl.label)
+        
+        let textField = app.otherElements.containing(.staticText, identifier:"Label").children(matching: .textField).element
+        textField.tap()
+        textField.typeText("123")
+        app.buttons["Calculate"].tap()
+        
+        XCTAssertTrue(lbl.label.hasPrefix("tip"), "tip is missing")
+        
+        XCUIApplication().otherElements.containing(.staticText, identifier:"tip: 61.5").children(matching: .textField).element.typeText("5")
     }
 
 }
